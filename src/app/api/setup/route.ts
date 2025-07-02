@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { randomUUID } from 'crypto';
 
 export async function POST() {
   try {
@@ -15,6 +16,7 @@ export async function POST() {
     const admin = await prisma.admin.create({
       data: {
         identifier: '123456',
+        sessionToken: randomUUID(),
       },
     });
 
