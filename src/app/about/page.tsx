@@ -91,7 +91,7 @@ export default function About() {
                 <div className="absolute inset-0 bg-gradient-to-bl from-accent/30 to-transparent rounded-3xl rotate-6"></div>
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
                   <Image
-                    src="/images/Richard Tandean1.jpg"
+                    src="/images/Richard Tandean1.webp"
                     alt="Richard Tandean"
                     width={500}
                     height={500}

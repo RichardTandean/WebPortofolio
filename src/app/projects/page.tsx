@@ -46,7 +46,7 @@ const projects: Project[] = [
     subtitle: "An AIoT Based Smart Agricultural System for Pests Detection",
     category: ["Web Apps", "Backend", "IoT"],
     description: "EPICS (Engineering Projects in Community Service) is a global service-learning program by IEEE, the world’s largest technical organization focused on using technology to benefit humanity. The program empowers students to develop real-world engineering skills through collaboration with professionals and communities. In this project, we partnered with the Faculty of Agriculture at UGM to help salak farmers in Sleman, Yogyakarta encounter pest issues, especially fruit flies. We used IoT sensors to monitor temperature, humidity, light, and rainfall, and applied machine learning to predict weather and pest outbreaks. We also developed MySalak, a PWA web app that displays sensor data, prediction results, and weekly fly trap counts (FTD) across all farming areas.",
-    images: ["/images/epic/epic1.jpg", "/images/epic/epic2.jpg", "/images/epic/epic3.png", "/images/epic/epic4.png", "/images/epic/epic5.jpg"],
+    images: ["/images/epic/epic1.webp", "/images/epic/epic2.webp", "/images/epic/epic3.webp", "/images/epic/epic4.webp", "/images/epic/epic5.webp"],
     tech: ["ReactJS", "Node.Js", "MySQL", "Firebase", "Arduino", "ESP32", "LoRa"],
     role: "Full Stack Developer & IoT Engineer",
     responsibilities: [
@@ -61,7 +61,7 @@ const projects: Project[] = [
     subtitle: "Agile Technica",
     category: ["Mobile Apps"],
     description: "A mobile application that is used to help chicken farmers to manage operationals like feed stock, live and dead chickens, and more",
-    images: ["/images/birdtec/birdtec1.jpeg"],
+    images: ["/images/birdtec/birdtec1.webp"],
     tech: ["React Native", "TypeScript", "Zustand", "Expo", "NativeBase"],
     features: [
       "Daily Unit Operation Management",
@@ -81,7 +81,7 @@ const projects: Project[] = [
     subtitle: "Agile Technica",
     category: ["Mobile Apps"],
     description: "A cloud base mobile application to help companies simplify their HR and payroll processes.",
-    images: ["/images/temanhr/temanhr1.jpeg", "/images/temanhr/temanhr2.jpeg"],
+    images: ["/images/temanhr/temanhr1.webp", "/images/temanhr/temanhr2.webp"],
     tech: ["React Native", "TypeScript", "Zustand", "Expo", "NativeBase"],
     features: [
       "Employee Attendance",
