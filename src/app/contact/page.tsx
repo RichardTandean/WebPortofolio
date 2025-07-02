@@ -79,11 +79,11 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="max-w-4xl mx-auto space-y-12"
+            className="max-w-4xl mx-auto space-y-6"
           >
             <div className="text-center">
               <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">Get in Touch</h1>
-              <p className="text-base md:text-lg text-white/60">Let's work together</p>
+              <p className="text-sm md:text-base text-white/60">Let's work together</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
@@ -91,16 +91,15 @@ export default function Contact() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
-                className="space-y-6"
+                className="space-y-2 md:space-y-6"
               >
                 <div>
                   <h2 className="text-xl md:text-2xl font-semibold mb-2 text-white">Contact Information</h2>
-                  <p className="text-sm md:text-base text-white/60">
+                  <p className="text-xs md:text-base text-white/60">
                     Feel free to reach out through any of these platforms
                   </p>
                 </div>
-
-                <div className="space-y-4">
+                <div className="space-y-0">
                   {socialLinks.map((link) => {
                     const Icon = link.icon;
                     return (
@@ -111,8 +110,8 @@ export default function Contact() {
                         rel="noopener noreferrer"
                         className="flex items-center gap-3 text-white/60 hover:text-white transition-colors p-3 rounded-lg hover:bg-white/5"
                       >
-                        <Icon className="w-5 h-5" />
-                        <span className="text-sm md:text-base">{link.name}</span>
+                        <Icon className="w-4 h-4 md:w-5 md:h-5" />
+                        <span className="text-xs md:text-base">{link.name}</span>
                       </Link>
                     );
                   })}
@@ -124,16 +123,16 @@ export default function Contact() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <div className="space-y-2">
-                    <label htmlFor="name" className="block text-sm font-medium text-white">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 md:space-y-6">
+                  <div className="space-y-1 md:space-y-2">
+                    <label htmlFor="name" className="block text-xs md:text-sm font-medium text-white">
                       Name
                     </label>
                     <input
                       {...register("name")}
                       type="text"
                       id="name"
-                      className="text-white w-full px-4 py-2 text-sm md:text-base bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                      className="text-white w-full px-4 py-2 text-xs md:text-sm bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                       placeholder="Your name"
                     />
                     {errors.name && (
@@ -141,15 +140,15 @@ export default function Contact() {
                     )}
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="block text-sm font-medium text-white">
+                  <div className="space-y-1 md:space-y-2">
+                    <label htmlFor="email" className="block text-xs md:text-sm font-medium text-white">
                       Email
                     </label>
                     <input
                       {...register("email")}
                       type="email"
                       id="email"
-                      className="text-white w-full px-4 py-2 text-sm md:text-base bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                      className="text-white w-full px-4 py-2 text-xs md:text-sm bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                       placeholder="your@email.com"
                     />
                     {errors.email && (
@@ -157,15 +156,15 @@ export default function Contact() {
                     )}
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="block text-sm font-medium text-white">
+                  <div className="space-y-1 md:space-y-2">
+                    <label htmlFor="message" className="block text-xs md:text-sm font-medium text-white">
                       Message
                     </label>
                     <textarea
                       {...register("message")}
                       id="message"
                       rows={5}
-                      className="text-white w-full px-4 py-2 text-sm md:text-base bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                      className="text-white w-full px-4 py-2 text-xs md:text-sm bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                       placeholder="Your message..."
                     />
                     {errors.message && (
