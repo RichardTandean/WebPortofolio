@@ -28,8 +28,7 @@ const socialLinks = [
 ];
 
 const technologies = [
-  "React", "Next.js", "TypeScript", "Node.js",
-  "Tailwind CSS", "PostgreSQL", "Docker"
+  "React", "Next.js", "ReactJS", "TypeScript", "JavaScript", "Tailwind CSS", "Node.js", "Express", "MySQL", "Docker"
 ];
 
 export default function Home() {
