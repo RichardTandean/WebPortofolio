@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 export const ImagesSlider = ({
   images,
@@ -44,10 +45,10 @@ export const ImagesSlider = ({
     setLoading(true);
     const loadPromises = images.map((image) => {
       return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.src = image;
-        img.onload = () => resolve(image);
-        img.onerror = reject;
+        const imgElement = new window.Image();
+        imgElement.src = image;
+        imgElement.onload = () => resolve(image);
+        imgElement.onerror = reject;
       });
     });
 
@@ -58,6 +59,7 @@ export const ImagesSlider = ({
       })
       .catch((error) => console.error("Failed to load images", error));
   };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowRight") {
@@ -134,15 +136,25 @@ export const ImagesSlider = ({
 
       {areImagesLoaded && (
         <AnimatePresence>
-          <motion.img
+          <motion.div
             key={currentIndex}
-            src={loadedImages[currentIndex]}
             initial="initial"
             animate="visible"
             exit={direction === "up" ? "upExit" : "downExit"}
             variants={slideVariants as any}
-            className="image h-full w-full absolute inset-0 object-cover object-center"
-          />
+            className="relative h-full w-full"
+          >
+            <Image
+              src={loadedImages[currentIndex]}
+              alt={`Slide ${currentIndex + 1}`}
+              fill
+              priority={currentIndex === 0}
+              quality={85}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover object-center"
+              loading={currentIndex === 0 ? "eager" : "lazy"}
+            />
+          </motion.div>
         </AnimatePresence>
       )}
     </div>
