@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { randomUUID } from 'crypto';
 
 export async function PUT(request: Request) {
   try {
@@ -27,6 +28,7 @@ export async function PUT(request: Request) {
       await prisma.admin.create({
         data: {
           identifier,
+          sessionToken: randomUUID(),
         },
       });
     } else {
