@@ -1,7 +1,16 @@
-import type { NextConfig } from "next";
+import { config } from 'process'
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'standalone',
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
+}
 
-export default nextConfig;
+export default nextConfig

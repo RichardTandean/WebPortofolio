@@ -18,8 +18,9 @@ model Message {
 }
 
 model Admin {
-  id         Int      @id @default(autoincrement())
-  identifier String   @unique
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  identifier   String   @unique
+  sessionToken String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

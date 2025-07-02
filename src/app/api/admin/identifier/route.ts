@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 
 export async function PUT(request: Request) {
   try {
-    const sessionToken = cookies().get('admin_session');
+    const sessionToken = (await cookies()).get('admin_session');
     if (!sessionToken) {
       return NextResponse.json(
         { error: 'Unauthorized' },
