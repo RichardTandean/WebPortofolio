@@ -1,4 +1,5 @@
 import { PrismaClient } from '../src/generated/prisma';
+import { randomUUID } from 'crypto';
 
 const prisma = new PrismaClient();
 
@@ -13,10 +14,12 @@ async function main() {
 
     const admin = await prisma.admin.create({
       data: {
-        identifier: '123456',
+        identifier: '696939',
+        sessionToken: randomUUID(),
       },
     });
 
+    console.log('Admin created successfully:', admin);
   } catch (error) {
     console.error('Error creating admin:', error);
   } finally {
