@@ -104,7 +104,7 @@ export default function Home() {
                   speed="slow"
                   pauseOnHover={true}
                   className="w-full"
-                />  
+                />
               </div>
             </motion.div>
           </div>

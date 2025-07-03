@@ -71,12 +71,12 @@ export default function About() {
                 </p>
                 <div className="flex gap-4">
                   <a
-                    href="/your-resume.pdf"
-                    download
+                    href="/file/CV_Richard Tandean.pdf"
+                    download="CV_Richard Tandean.pdf"
                     className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm font-medium text-white transition-colors bg-accent hover:bg-accent/90 rounded-full"
                   >
                     <FileDown className="w-4 h-4" />
-                    Download Resume
+                    Download CV
                   </a>
                 </div>
               </motion.div>
