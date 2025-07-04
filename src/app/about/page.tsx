@@ -3,9 +3,6 @@ import { AboutContent } from "@/components/about-content";
 
 async function getActiveCV() {
   try {
-    if (process.env.SKIP_DB_CHECK === "1") {
-      return null;
-    }
     const cv = await prisma.cv.findFirst({
       where: { active: true },
       orderBy: { uploadedAt: 'desc' }
