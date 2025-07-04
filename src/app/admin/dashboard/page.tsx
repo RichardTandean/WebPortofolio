@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Toast } from '@/components/ui/toast';
 import { BackgroundBeamsWithCollision } from '@/components/ui/background-beams-with-collision';
-import { Eye, EyeOff, Settings, LogOut } from 'lucide-react';
+import { Eye, EyeOff, Settings, LogOut, Upload } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -12,6 +12,11 @@ interface Message {
   message: string;
   createdAt: string;
   read: boolean;
+}
+
+interface CV {
+  filename: string;
+  uploadedAt: string;
 }
 
 export default function AdminDashboard() {
@@ -23,6 +28,8 @@ export default function AdminDashboard() {
   const [identifier, setIdentifier] = useState('');
   const [showSettings, setShowSettings] = useState(false);
   const [newIdentifier, setNewIdentifier] = useState('');
+  const [currentCV, setCurrentCV] = useState<CV | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,6 +129,73 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleCVUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+
+    const file = e.target.files[0];
+    if (file.type !== 'application/pdf') {
+      setToastType('error');
+      setToastMessage('Please upload a PDF file');
+      setShowToast(true);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('/api/admin/cv', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Failed to upload CV');
+
+      const data = await response.json();
+      setCurrentCV({
+        filename: data.cv.filename,
+        uploadedAt: new Date(data.cv.uploadedAt).toLocaleDateString(),
+      });
+
+      setToastType('success');
+      setToastMessage('CV uploaded successfully');
+      setShowToast(true);
+
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } catch (error) {
+      setToastType('error');
+      setToastMessage('Failed to upload CV');
+      setShowToast(true);
+    }
+  };
+
+  const fetchCurrentCV = async () => {
+    try {
+      const response = await fetch('/api/admin/cv');
+      if (!response.ok) throw new Error('Failed to fetch CV');
+      
+      const data = await response.json();
+      if (data.cv) {
+        setCurrentCV({
+          filename: data.cv.filename,
+          uploadedAt: new Date(data.cv.uploadedAt).toLocaleDateString(),
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching CV:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchMessages();
+      fetchCurrentCV();
+    }
+  }, [isAuthenticated]);
+
   if (!isAuthenticated) {
     return (
       <div className="relative min-h-screen">
@@ -181,7 +255,7 @@ export default function AdminDashboard() {
         <div className="min-h-screen px-4 md:px-8 pt-20">
           <div className="max-w-6xl mx-auto space-y-8">
             <div className="flex justify-between items-center">
-              <h1 className="text-4xl font-bold text-white">Messages</h1>
+              <h1 className="text-4xl font-bold text-white">Admin Dashboard</h1>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setShowSettings(!showSettings)}
@@ -200,6 +274,37 @@ export default function AdminDashboard() {
               </div>
             </div>
 
+            {/* CV Upload Section */}
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/10">
+              <h2 className="text-xl font-semibold text-white mb-4">CV Management</h2>
+              <div className="space-y-4">
+                {currentCV && (
+                  <div className="text-white/80">
+                    <p>Current CV: {currentCV.filename}</p>
+                    <p>Uploaded on: {currentCV.uploadedAt}</p>
+                  </div>
+                )}
+                <div className="flex items-center gap-4">
+                  <input
+                    type="file"
+                    accept=".pdf"
+                    onChange={handleCVUpload}
+                    ref={fileInputRef}
+                    className="hidden"
+                    id="cv-upload"
+                  />
+                  <label
+                    htmlFor="cv-upload"
+                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-all bg-accent hover:bg-accent/90 rounded-lg cursor-pointer"
+                  >
+                    <Upload className="w-4 h-4" />
+                    Upload New CV
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Settings Section */}
             {showSettings && (
               <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/10">
                 <h2 className="text-xl font-semibold text-white mb-4">Update Identifier</h2>
@@ -228,7 +333,9 @@ export default function AdminDashboard() {
               </div>
             )}
 
+            {/* Messages Section */}
             <div className="grid gap-4">
+              <h2 className="text-xl font-semibold text-white">Messages</h2>
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -253,11 +360,9 @@ export default function AdminDashboard() {
                       )}
                     </button>
                   </div>
-                  <p className="text-white/80 whitespace-pre-wrap text-base leading-relaxed">
-                    {message.message}
-                  </p>
-                  <p className="text-sm text-white/40 mt-4">
-                    {new Date(message.createdAt).toLocaleString()}
+                  <p className="text-white/80">{message.message}</p>
+                  <p className="text-sm text-white/40 mt-2">
+                    {new Date(message.createdAt).toLocaleDateString()}
                   </p>
                 </div>
               ))}
@@ -272,7 +377,7 @@ export default function AdminDashboard() {
           </div>
         </div>
       </BackgroundBeamsWithCollision>
-
+      
       {showToast && (
         <Toast
           message={toastMessage}

@@ -1,12 +1,11 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { randomUUID } from 'crypto';
 
 export async function PUT(request: Request) {
   try {
-    const sessionToken = (await cookies()).get('admin_session');
-    if (!sessionToken) {
+    const sessionCookie = (await cookies()).get('admin_session');
+    if (!sessionCookie) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
@@ -28,7 +27,6 @@ export async function PUT(request: Request) {
       await prisma.admin.create({
         data: {
           identifier,
-          sessionToken: randomUUID(),
         },
       });
     } else {

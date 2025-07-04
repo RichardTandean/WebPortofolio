@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { identifier } = body;
 
-    const admin = await prisma.admin.findFirst({
+    const admin = await prisma.admin.findUnique({
       where: {
         identifier: identifier,
       },
@@ -25,15 +25,27 @@ export async function POST(request: Request) {
       );
     }
 
+    // Generate a session token and set it in a cookie
     const sessionToken = generateSessionToken();
-    (await cookies()).set('admin_session', sessionToken, {
+    
+    // Create response with the cookie
+    const response = NextResponse.json({ 
+      success: true,
+      admin: {
+        id: admin.id,
+        identifier: admin.identifier
+      }
+    });
+
+    // Set the cookie in the response
+    response.cookies.set('admin_session', sessionToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 7200,
+      maxAge: 7200, // 2 hours
     });
 
-    return NextResponse.json({ success: true });
+    return response;
   } catch (error) {
     console.error('Error in admin login:', error);
     return NextResponse.json(
