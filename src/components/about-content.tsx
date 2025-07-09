@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { FileDown } from "lucide-react";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
-import Image from "next/image";
+import { LoadingImage } from "@/components/ui/loading-image";
 import { AuroraText } from "@/components/magicui/aurora-text";
 
 const experiences = [
@@ -95,7 +95,7 @@ export function AboutContent({ cvPath, cvFilename }: AboutContentProps) {
                 <div className="absolute inset-0 bg-gradient-to-tr from-accent/30 to-transparent rounded-3xl -rotate-6"></div>
                 <div className="absolute inset-0 bg-gradient-to-bl from-accent/30 to-transparent rounded-3xl rotate-6"></div>
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-                  <Image
+                  <LoadingImage
                     src="/images/Richard Tandean1.webp"
                     alt="Richard Tandean"
                     width={500}
