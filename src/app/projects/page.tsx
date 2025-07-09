@@ -178,6 +178,7 @@ export default function Projects() {
                         <ImagesSlider 
                           images={project.images}
                           autoplay={true}
+                          direction="down"
                           className="absolute inset-0 w-full h-full rounded-2xl"
                         >
                           <div className="absolute inset-0 bg-gradient-to-tr from-accent/30 to-transparent mix-blend-overlay z-50" />
