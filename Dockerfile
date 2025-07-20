@@ -9,11 +9,18 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
 
+# Install Prisma dependencies
+RUN npm install prisma@6.11.1
+RUN npx prisma generate
+
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Generate Prisma Client
+RUN npx prisma generate
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
@@ -33,6 +40,8 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
 # Set the correct permission for prerender cache
 RUN mkdir .next

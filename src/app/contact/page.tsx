@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { useForm } from "react-hook-form";
+// import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Github, Linkedin, Instagram, MessageSquare, Mail } from "lucide-react";
 import Link from "next/link";
-import axios from "axios";
+// import axios from "axios";
 import { useState } from "react";
 import { Toast } from "@/components/ui/toast";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
@@ -47,29 +47,29 @@ export default function Contact() {
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-  });
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors, isSubmitting },
+  //   reset,
+  // } = useForm<FormData>({
+  //   resolver: zodResolver(formSchema),
+  // });
 
-  const onSubmit = async (data: FormData) => {
-    try {
-      await axios.post('/api/messages', data);
-      reset();
-      setToastType('success');
-      setToastMessage('Message sent successfully!');
-      setShowToast(true);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setToastType('error');
-      setToastMessage('Failed to send message. Please try again.');
-      setShowToast(true);
-    }
-  };
+  // const onSubmit = async (data: FormData) => {
+  //   try {
+  //     await axios.post('/api/messages', data);
+  //     reset();
+  //     setToastType('success');
+  //     setToastMessage('Message sent successfully!');
+  //     setShowToast(true);
+  //   } catch (error) {
+  //     console.error('Error submitting form:', error);
+  //     setToastType('error');
+  //     setToastMessage('Failed to send message. Please try again.');
+  //     setShowToast(true);
+  //   }
+  // };
 
   return (
     <main className="flex min-h-screen flex-col items-center">
@@ -117,7 +117,7 @@ export default function Contact() {
                   })}
                 </div>
               </motion.div>
-
+{/* 
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -180,7 +180,7 @@ export default function Contact() {
                     {isSubmitting ? "Sending..." : "Send Message"}
                   </button>
                 </form>
-              </motion.div>
+              </motion.div> */}
             </div>
           </motion.div>
         </section>
