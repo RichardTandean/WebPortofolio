@@ -15,13 +15,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const childrenString = children?.toString() || '';
-  const isAdminRoute = childrenString.includes('/admin/');
+  // const childrenString = children?.toString() || '';
+  // const isAdminRoute = childrenString.includes('/admin/');
+
 
   return (
     <html lang="en">
       <body className={inter.className}>
-        {!isAdminRoute && <Nav />}
+        {/* {!isAdminRoute && <Nav />} */}
+        <Nav />
         {children}
       </body>
     </html>
