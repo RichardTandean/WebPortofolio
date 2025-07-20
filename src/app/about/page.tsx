@@ -16,7 +16,7 @@ import { AboutContent } from "@/components/about-content";
 
 export default async function About() {
   // const activeCV = await getActiveCV();
-  const cvPath = "@/public/CV_Richard Tandean.pdf";
+  const cvPath = "/CV_Richard Tandean.pdf";
   const cvFilename = "CV_Richard Tandean.pdf";
 
   return <AboutContent cvPath={cvPath} cvFilename={cvFilename} />;

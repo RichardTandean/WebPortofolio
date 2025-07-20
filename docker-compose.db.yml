@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=portfolio
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - portfolio_network
+
+volumes:
+  mysql_data:
+
+networks:
+  portfolio_network:
+    driver: bridge
