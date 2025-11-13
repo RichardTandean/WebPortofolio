@@ -98,6 +98,19 @@ const projects: Project[] = [
       "Participated in Agile ceremonies including daily stand-ups, sprint planning, and retrospectives"
     ]
   },
+  {
+    title: "Superfreak Studio's Website (Still in Development)",
+    subtitle: "Superfreak Studio",
+    category: ["Web Apps"],
+    description: "A landing page for Superfreak Studio, a 3d printed furniture and 3d printing service me and my friend started at April 2025.",
+    images: ["/images/superfreak/hero-page.webp", "/images/superfreak/superfreak-faq.webp", "/images/superfreak/superfreak-originals.webp"],
+    tech: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Shadcn UI"],
+    role: "Web Developer",
+    responsibilities: [
+      "Designed and implemented the landing page for Superfreak Studio using Next.js and Tailwind CSS",
+    ],
+    demo: "https://superfreakstudio.com"
+  },
 ];
 
 const categories = ["All", "Web Apps", "Mobile Apps", "Backend", "IoT"];
@@ -294,7 +307,7 @@ export default function Projects() {
                             className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs md:text-sm font-medium text-white bg-accent hover:bg-accent/90 rounded-full transition-colors"
                           >
                             <ExternalLink className="w-4 h-4 md:w-5 md:h-5" />
-                            Live Demo
+                            Check out the project!
                           </Link>
                           )}
                         </div>

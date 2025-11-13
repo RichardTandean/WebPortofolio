@@ -156,7 +156,9 @@ export function AboutContent({ cvPath, cvFilename }: AboutContentProps) {
                 <div className="bg-white/5 rounded-2xl p-8 backdrop-blur-sm border border-white/10">
                   <h2 className="text-2xl md:text-3xl font-semibold text-accent mb-6">What I Love</h2>
                   <p className="text-white/80 leading-relaxed">
-                    Beyond coding, I'm passionate about creating intuitive user experiences and solving complex technical challenges. I thrive in collaborative environments and enjoy mentoring fellow developers. When I'm not coding, you can find me [Your Hobbies/Interests].
+                    Beyond coding, I'm passionate about creating intuitive user experiences and solving complex technical challenges. 
+                    I thrive in collaborative environments and enjoy mentoring fellow developers. 
+                    When I'm not coding, you can find me going to the gym or eating out with my friends.
                   </p>
                 </div>
               </div>
