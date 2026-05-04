@@ -1,206 +1,145 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
-import { AuroraText } from "@/components/magicui/aurora-text";
-import { 
-  FaReact, 
-  FaNodeJs, 
-  FaDocker, 
-  FaGitAlt, 
-  FaLinux,
-} from "react-icons/fa";
-import { 
-  SiNextdotjs, 
-  SiTypescript,
-  SiTailwindcss,
-  SiExpress,
-  SiJavascript,
-  SiExpo,
-  SiBootstrap,
-  SiFirebase,
-  SiMysql,
-  SiPhp,
-  SiPython,
-  SiFlask,
-} from "react-icons/si";
-import { TbBrandReactNative } from "react-icons/tb";
 
 const technicalSkills = [
   {
-    name: "Frontend",
-    skills: [
-      { name: "React", icon: FaReact },
-      { name: "Next.js", icon: SiNextdotjs },
-      { name: "React Native", icon: TbBrandReactNative },
-      { name: "Expo", icon: SiExpo },
-      { name: "TypeScript", icon: SiTypescript },
-      { name: "JavaScript", icon: SiJavascript },
-      { name: "Tailwind CSS", icon: SiTailwindcss },
-      { name: "Bootstrap", icon: SiBootstrap },
-    ],
+    category: "AI & Automation",
+    skills: ["n8n", "OpenAI", "Flux", "Whisper", "TTS", "FFMPEG", "Stable Diffusion", "NestJS"],
   },
   {
-    name: "Backend",
-    skills: [
-      { name: "Node.js", icon: FaNodeJs },
-      { name: "Express.js", icon: SiExpress },
-      { name: "MySQL", icon: SiMysql },
-      { name: "PHP", icon: SiPhp },
-      { name: "Python", icon: SiPython },
-      { name: "Flask", icon: SiFlask },
-    ],
+    category: "Frontend",
+    skills: ["React", "Next.js", "TypeScript", "React Native", "Expo", "JavaScript", "Tailwind CSS", "Bootstrap"],
   },
   {
-    name: "Tools & DevOps",
-    skills: [
-      { name: "Git", icon: FaGitAlt },
-      { name: "Docker", icon: FaDocker },
-      { name: "Linux", icon: FaLinux },
-      { name: "Firebase", icon: SiFirebase },
-    ],
+    category: "Backend",
+    skills: ["Node.js", "Express", "MySQL", "PHP", "Python", "Flask"],
+  },
+  {
+    category: "Tools & DevOps",
+    skills: ["Git", "Docker", "Linux", "Firebase"],
   },
 ];
 
-const softSkills = [
-  {
-    name: "Leadership",
-    description: "Leading teams and projects with clear vision and direction",
-  },
-  {
-    name: "Problem Solving",
-    description: "Analytical thinking and creative solution finding",
-  },
-  {
-    name: "Communication",
-    description: "Clear and effective verbal and written communication",
-  },
-  {
-    name: "Teamwork",
-    description: "Collaborative work and team synergy building",
-  },
-  {
-    name: "Time Management",
-    description: "Efficient prioritization and deadline management",
-  },
-  {
-    name: "Adaptability",
-    description: "Quick learning and flexibility in dynamic environments",
-  },
+const professionalTraits = [
+  { name: "Problem Solving", description: "Analytical thinking and creative solution finding" },
+  { name: "Communication", description: "Clear and effective verbal and written communication" },
+  { name: "Adaptability", description: "Quick learning and flexibility in dynamic environments" },
 ];
 
-function SkillIcon({ skill, index }: { skill: any; index: number }) {
-  const Icon = skill.icon;
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: index * 0.1 }}
-      className="group flex flex-col items-center gap-2"
-    >
-      <div className="relative w-12 h-12 bg-white/5 rounded-xl p-2.5 group-hover:bg-accent/10 transition-all duration-300 group-hover:scale-110">
-        <Icon className="w-full h-full text-accent" />
-      </div>
-      <span className="text-xs text-white/60 group-hover:text-white transition-colors text-center">
-        {skill.name}
-      </span>
-    </motion.div>
-  );
-}
-
-function CategorySection({ category, index }: { category: any; index: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.2 }}
-      className="space-y-6"
-    >
-      <h2 className="text-lg font-semibold text-accent">{category.name}</h2>
-      <div className="grid grid-cols-4 md:grid-cols-8 gap-6">
-        {category.skills.map((skill: any, skillIndex: number) => (
-          <SkillIcon
-            key={skill.name}
-            skill={skill}
-            index={skillIndex}
-          />
-        ))}
-      </div>
-    </motion.div>
-  );
-}
-
-function SoftSkillCard({ skill, index }: { skill: any; index: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      className="bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-accent/5 transition-colors duration-300"
-    >
-      <h3 className="text-base font-medium text-white mb-2">{skill.name}</h3>
-      <p className="text-sm text-white/60">{skill.description}</p>
-    </motion.div>
-  );
-}
+const interests = [
+  {
+    label: "Financial Markets",
+    description: "Active follower of stock and crypto markets. Enthusiast in technical analysis and market trend interpretation.",
+  },
+  {
+    label: "AI Content Creation",
+    description: "Passionate about leveraging AI for creative content — from image generation to automated multi-platform publishing pipelines.",
+  },
+];
 
 export default function Skills() {
   return (
-    <main className="flex min-h-screen flex-col items-center">
-      <BackgroundBeamsWithCollision>
-        <section className="w-full px-4 md:px-6 py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-6xl mx-auto space-y-16"
-          >
-            {/* Technical Skills Section */}
-            <div>
-              <div className="text-center space-y-2 mb-10">
-                <motion.h2 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-3xl md:text-4xl font-bold text-white"
-                >
-                  Technical <AuroraText>Skills</AuroraText>
-                </motion.h2>
-                <p className="text-sm md:text-base text-white/60">
-                  Technologies and tools I work with
-                </p>
-              </div>
+    <main className="bg-[#0d0d0d] min-h-screen">
+      <section className="max-w-[1200px] mx-auto px-6 md:px-12 pt-24 sm:pt-28 md:pt-32 pb-20">
+        <div className="mb-12">
+          <h1 className="text-3xl md:text-4xl font-display font-extrabold text-[#f0f0eb] tracking-tight mb-2">
+            Skills
+          </h1>
+          <p className="text-sm text-[#777777] max-w-xl">
+            Technologies, tools, and professional strengths.
+          </p>
+        </div>
 
-              <div className="space-y-12">
-                {technicalSkills.map((category, index) => (
-                  <CategorySection key={category.name} category={category} index={index} />
+        <div className="rule-top pt-12">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] lg:grid-cols-[1fr_360px] gap-16 lg:gap-24">
+            {/* Technical Skills */}
+            <div>
+              <p className="text-xs font-mono text-[#555555] uppercase tracking-widest mb-10">
+                Technical
+              </p>
+              <div className="space-y-10">
+                {technicalSkills.map((group, gi) => (
+                  <motion.div
+                    key={group.category}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: gi * 0.1 }}
+                  >
+                    <p className="text-xs md:text-[11px] font-mono text-[#444444] uppercase tracking-widest mb-3">
+                      {group.category}
+                    </p>
+                    <div className="flex flex-wrap gap-x-3 sm:gap-x-5 gap-y-2">
+                      {group.skills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="text-sm text-[#777777] font-sans"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
 
-            {/* Soft Skills Section */}
-            <div>
-              <div className="text-center space-y-2 mb-10">
-                <motion.h2 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-3xl md:text-4xl font-bold text-white"
-                >
-                  Professional <AuroraText>Traits</AuroraText>
-                </motion.h2>
-                <p className="text-sm md:text-base text-white/60">
-                  Core strengths and characteristics
+            {/* Professional + Interests */}
+            <div className="space-y-12">
+              <div>
+                <p className="text-xs font-mono text-[#555555] uppercase tracking-widest mb-6">
+                  Professional Traits
                 </p>
+                <div className="grid grid-cols-2 md:grid-cols-1 gap-2">
+                  {professionalTraits.map((trait, i) => (
+                    <motion.div
+                      key={trait.name}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.05 }}
+                      className="rule-all p-3 sm:p-4"
+                    >
+                      <h3 className="text-sm font-display font-semibold text-[#f0f0eb] mb-1">
+                        {trait.name}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#777777] leading-relaxed">
+                        {trait.description}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {softSkills.map((skill, index) => (
-                  <SoftSkillCard key={skill.name} skill={skill} index={index} />
-                ))}
+              <div>
+                <p className="text-xs font-mono text-[#555555] uppercase tracking-widest mb-6">
+                  Beyond Code
+                </p>
+                <div className="space-y-3">
+                  {interests.map((interest, i) => (
+                    <motion.div
+                      key={interest.label}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + i * 0.1 }}
+                      className="rule-all p-3 sm:p-4"
+                    >
+                      <h3 className="text-sm font-display font-semibold text-[#f0f0eb] mb-1">
+                        {interest.label}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#777777] leading-relaxed line-clamp-2 sm:line-clamp-none">
+                        {interest.description}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
-          </motion.div>
-        </section>
-      </BackgroundBeamsWithCollision>
+          </div>
+        </div>
+      </section>
     </main>
   );
-} 
+}

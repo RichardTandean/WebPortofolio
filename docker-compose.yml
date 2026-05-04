@@ -1,26 +1,6 @@
 version: '3.8'
 
 services:
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    depends_on:
-      - app
-    networks:
-      - portfolio_network
-
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-
   app:
     build:
       context: .
@@ -29,29 +9,13 @@ services:
     expose:
       - "3000"
     environment:
-      - DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/portfolio
       - NODE_ENV=production
-    depends_on:
-      - db
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL}
     networks:
-      - portfolio_network
-
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=portfolio
-    volumes:
-      - mysql_data:/var/lib/mysql
-    expose:
-      - "3306"
-    networks:
-      - portfolio_network
-
-volumes:
-  mysql_data:
+      - webportofolio-network
 
 networks:
-  portfolio_network:
+  webportofolio-network:
     driver: bridge
+    name: webportofolio-network

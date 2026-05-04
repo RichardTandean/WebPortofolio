@@ -10,7 +10,7 @@ interface LoadingImageProps extends Omit<React.ComponentProps<typeof Image>, 'sr
   src: string | null | undefined;
 }
 
-export function LoadingImage({ wrapperClassName, className, src, ...props }: LoadingImageProps) {
+export function LoadingImage({ wrapperClassName, className, src, alt = "", ...props }: LoadingImageProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   // If src is null, undefined, or empty string, don't render anything
@@ -38,6 +38,7 @@ export function LoadingImage({ wrapperClassName, className, src, ...props }: Loa
       <Image
         {...props}
         src={src}
+        alt={alt}
         className={cn(
           "transition-opacity duration-300",
           isLoading ? "opacity-0" : "opacity-100",

@@ -2,17 +2,19 @@
 
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Github, ChevronDown, ExternalLink } from "lucide-react";
+import { ArrowRight, Github, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { projects, categories, Project } from "@/lib/projects";
+import { Project } from "@/lib/projects";
 
-function ProjectBlock({
+export function ProjectCard({
   project,
   index,
+  compact = false,
 }: {
   project: Project;
   index: number;
+  compact?: boolean;
 }) {
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -23,11 +25,43 @@ function ProjectBlock({
     project.features
   );
 
+  if (compact) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.1 }}
+        className="rule-all p-3 sm:p-5 h-full flex flex-col"
+      >
+        <p className="text-xs font-mono text-[#0055ff] mb-2">
+          {String(index + 1).padStart(2, "0")}
+        </p>
+        <h3 className="text-sm font-display font-semibold text-[#f0f0eb] mb-1">
+          {project.title}
+        </h3>
+        <p className="text-xs text-[#777777] leading-relaxed mb-3 line-clamp-2">
+          {project.subtitle}
+        </p>
+        <div className="flex flex-wrap gap-1.5 mt-auto">
+          {project.tech.slice(0, 3).map((t) => (
+            <span
+              key={t}
+              className="text-[10px] sm:text-[11px] font-mono text-[#555555]"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       className="rule-all"
     >
       {project.images.length > 0 ? (
@@ -41,37 +75,25 @@ function ProjectBlock({
         </div>
       ) : (
         <div className="aspect-video sm:aspect-[21/9] bg-[#141414] flex items-center justify-center">
-          <span className="text-sm font-mono text-[#444444]">
-            {project.title}
-          </span>
+          <span className="text-sm font-mono text-[#444444]">{project.title}</span>
         </div>
       )}
-
       <div className="p-4 sm:p-6 md:p-8">
-        <div className="flex flex-wrap items-center justify-between mb-2 gap-2">
+        <div className="flex items-center justify-between mb-2">
           <p className="text-xs font-mono text-[#0055ff]">
             {String(index + 1).padStart(2, "0")}
           </p>
-          <div className="flex items-center gap-2 flex-wrap">
-            {project.category.map((cat) => (
-              <span
-                key={cat}
-                className="text-[10px] sm:text-[11px] font-mono text-[#555555] uppercase tracking-widest"
-              >
-                {cat}
-              </span>
-            ))}
-          </div>
+          <span className="text-[10px] sm:text-[11px] font-mono text-[#555555] uppercase tracking-widest">
+            {project.category[0]}
+          </span>
         </div>
-
-        <h2 className="text-xl md:text-2xl font-display font-bold text-[#f0f0eb] mb-1">
+        <h3 className="text-lg md:text-xl font-display font-bold text-[#f0f0eb] mb-1">
           {project.title}
-        </h2>
-        <p className="text-sm text-[#777777] mb-3">{project.subtitle}</p>
+        </h3>
+        <p className="text-sm text-[#777777] mb-2">{project.subtitle}</p>
         <p className="text-sm text-[#999999] leading-relaxed mb-4">
           {project.description}
         </p>
-
         <div className="flex flex-wrap gap-2 mb-4">
           {project.tech.map((t) => (
             <span
@@ -83,51 +105,25 @@ function ProjectBlock({
           ))}
         </div>
 
-        {(project.github || project.demo) && (
-          <div className="flex flex-wrap items-center gap-4 mb-4">
-            {project.github && (
-              <Link
-                href={project.github}
-                target="_blank"
-                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#777777] hover:text-[#f0f0eb] transition-colors py-1 min-h-[44px]"
-              >
-                <Github className="w-3.5 h-3.5" />
-                Source
-              </Link>
-            )}
-            {project.demo && (
-              <Link
-                href={project.demo}
-                target="_blank"
-                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#777777] hover:text-[#f0f0eb] transition-colors py-1 min-h-[44px]"
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-                Live
-              </Link>
-            )}
-          </div>
-        )}
-
         {hasDetails && (
           <>
             <button
               onClick={() => setExpanded(!expanded)}
               className="inline-flex items-center gap-1.5 text-xs font-mono text-[#0055ff] hover:text-[#3b82f6] transition-colors py-1.5 min-h-[44px]"
             >
-              {expanded ? "Collapse details" : "Expand details"}
+              {expanded ? "Collapse" : "View details"}
               <ChevronDown
                 className={`w-3 h-3 transition-transform ${
                   expanded ? "rotate-180" : ""
                 }`}
               />
             </button>
-
             <motion.div
               initial={false}
               animate={{ height: expanded ? "auto" : 0 }}
               className="overflow-hidden"
             >
-              <div ref={contentRef} className="pt-6 space-y-5">
+              <div ref={contentRef} className="pt-6 space-y-4">
                 {project.role && (
                   <div>
                     <p className="text-xs font-mono text-[#555555] uppercase tracking-widest mb-1">
@@ -147,7 +143,7 @@ function ProjectBlock({
                           key={i}
                           className="text-sm text-[#999999] flex items-start gap-2"
                         >
-                          <span className="text-[#0055ff] mt-1.5 block w-1 h-1 flex-shrink-0" />
+                          <span className="text-[#0055ff] mt-1.5 block w-1 h-1 rounded-full flex-shrink-0" />
                           {r}
                         </li>
                       ))}
@@ -157,7 +153,7 @@ function ProjectBlock({
                 {project.features && (
                   <div>
                     <p className="text-xs font-mono text-[#555555] uppercase tracking-widest mb-2">
-                      Features
+                      Key Features
                     </p>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {project.features.map((f, i) => (
@@ -231,59 +227,35 @@ function ProjectBlock({
                     </div>
                   </div>
                 )}
+                {(project.github || project.demo) && (
+                  <div className="flex gap-4 pt-2">
+                    {project.github && (
+                      <Link
+                        href={project.github}
+                        target="_blank"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#0055ff] hover:text-[#3b82f6] transition-colors py-1 min-h-[44px]"
+                      >
+                        <Github className="w-3.5 h-3.5" />
+                        Source
+                      </Link>
+                    )}
+                    {project.demo && (
+                      <Link
+                        href={project.demo}
+                        target="_blank"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#0055ff] hover:text-[#3b82f6] transition-colors py-1 min-h-[44px]"
+                      >
+                        <ArrowRight className="w-3.5 h-3.5" />
+                        Live Demo
+                      </Link>
+                    )}
+                  </div>
+                )}
               </div>
             </motion.div>
           </>
         )}
       </div>
     </motion.div>
-  );
-}
-
-export default function Projects() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-
-  const filtered =
-    selectedCategory === "All"
-      ? projects
-      : projects.filter((p) => p.category.includes(selectedCategory));
-
-  return (
-    <main className="bg-[#0d0d0d] min-h-screen">
-      <section className="max-w-[1200px] mx-auto px-6 md:px-12 pt-24 sm:pt-28 md:pt-32 pb-20">
-        <div className="mb-12">
-          <h1 className="text-3xl md:text-4xl font-display font-extrabold text-[#f0f0eb] tracking-tight mb-2">
-            Projects
-          </h1>
-          <p className="text-sm text-[#777777] max-w-xl">
-            A selection of work across AI, software engineering, and automation.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap gap-3 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`text-xs font-mono transition-colors pb-1.5 py-2 min-h-[44px] inline-flex items-center ${
-                selectedCategory === cat
-                  ? "text-[#f0f0eb] border-b border-[#0055ff]"
-                  : "text-[#555555] hover:text-[#777777] border-b border-transparent"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        <div className="rule-top pt-12 space-y-0">
-          {filtered.map((project, i) => (
-            <div key={project.title}>
-              <ProjectBlock project={project} index={i} />
-            </div>
-          ))}
-        </div>
-      </section>
-    </main>
   );
 }
