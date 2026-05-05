@@ -1,17 +1,41 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Bot, X } from "lucide-react";
 import { useChatStore } from "@/lib/chat-store";
 import { ChatInterface } from "./chat-interface";
 
 export function RaypWidget() {
   const isOpen = useChatStore((state) => state.isWidgetOpen);
+  const hasSeenPopup = useChatStore((state) => state.hasSeenPopup);
   const toggleWidget = useChatStore((state) => state.toggleWidget);
   const openWidget = useChatStore((state) => state.openWidget);
 
   return (
     <>
+      {/* Welcome Popup */}
+      <AnimatePresence>
+        {!hasSeenPopup && !isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            transition={{ delay: 0.6, duration: 0.4 }}
+            className="fixed bottom-24 right-6 z-[60] max-w-[260px]"
+          >
+            <div className="bg-[#1a1a1a] border border-[#333333] rounded-2xl px-4 py-3 shadow-xl">
+              <p className="text-sm text-[#f0f0eb] leading-relaxed">
+                Hi, I&apos;m Rayp. Richard&apos;s personal assistant. You can ask me anything about him!
+              </p>
+            </div>
+            {/* Arrow pointing down-right to the button */}
+            <div className="flex justify-end mr-5">
+              <div className="w-3 h-3 bg-[#1a1a1a] border-r border-b border-[#333333] rotate-45 -mt-[6px]" />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Floating Button */}
       {!isOpen && (
         <motion.button

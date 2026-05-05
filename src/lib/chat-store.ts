@@ -18,6 +18,7 @@ interface ChatState {
   // UI State
   isWidgetOpen: boolean;
   isTyping: boolean;
+  hasSeenPopup: boolean;
   
   // Actions
   addMessage: (message: Omit<Message, "id" | "timestamp">) => void;
@@ -26,6 +27,7 @@ interface ChatState {
   openWidget: () => void;
   closeWidget: () => void;
   clearMessages: () => void;
+  dismissPopup: () => void;
   checkExpiration: () => void;
   getHistoryForAI: () => { role: string; content: string }[];
 }
@@ -42,6 +44,7 @@ export const useChatStore = create<ChatState>()(
       lastActivity: Date.now(),
       isWidgetOpen: false,
       isTyping: false,
+      hasSeenPopup: false,
 
       // Add a message
       addMessage: (message) => {
@@ -61,11 +64,14 @@ export const useChatStore = create<ChatState>()(
 
       // Toggle widget
       toggleWidget: () => set((state) => ({ isWidgetOpen: !state.isWidgetOpen })),
-      openWidget: () => set({ isWidgetOpen: true }),
+      openWidget: () => set({ isWidgetOpen: true, hasSeenPopup: true }),
       closeWidget: () => set({ isWidgetOpen: false }),
 
       // Clear messages manually
       clearMessages: () => set({ messages: [], lastActivity: Date.now() }),
+
+      // Dismiss the welcome popup permanently
+      dismissPopup: () => set({ hasSeenPopup: true }),
 
       // Check and clear expired history
       checkExpiration: () => {
@@ -94,6 +100,7 @@ export const useChatStore = create<ChatState>()(
       partialize: (state) => ({
         messages: state.messages,
         lastActivity: state.lastActivity,
+        hasSeenPopup: state.hasSeenPopup,
       }),
     }
   )
