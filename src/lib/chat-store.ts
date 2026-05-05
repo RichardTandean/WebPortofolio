@@ -62,9 +62,30 @@ export const useChatStore = create<ChatState>()(
       // Set typing state
       setTyping: (typing) => set({ isTyping: typing }),
 
-      // Toggle widget
-      toggleWidget: () => set((state) => ({ isWidgetOpen: !state.isWidgetOpen })),
-      openWidget: () => set({ isWidgetOpen: true, hasSeenPopup: true }),
+      // Toggle widget (check expiration when opening)
+      toggleWidget: () => {
+        const state = get();
+        if (state.isWidgetOpen) {
+          set({ isWidgetOpen: false });
+        } else {
+          const expired = Date.now() - state.lastActivity > EXPIRATION_MS;
+          set({
+            isWidgetOpen: true,
+            hasSeenPopup: true,
+            ...(expired ? { messages: [], lastActivity: Date.now() } : {}),
+          });
+        }
+      },
+      // Open widget (check expiration)
+      openWidget: () => {
+        const state = get();
+        const expired = Date.now() - state.lastActivity > EXPIRATION_MS;
+        set({
+          isWidgetOpen: true,
+          hasSeenPopup: true,
+          ...(expired ? { messages: [], lastActivity: Date.now() } : {}),
+        });
+      },
       closeWidget: () => set({ isWidgetOpen: false }),
 
       // Clear messages manually

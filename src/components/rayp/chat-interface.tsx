@@ -13,16 +13,10 @@ export function ChatInterface() {
   const isTyping = useChatStore((state) => state.isTyping);
   const addMessage = useChatStore((state) => state.addMessage);
   const setTyping = useChatStore((state) => state.setTyping);
-  const checkExpiration = useChatStore((state) => state.checkExpiration);
   const getHistoryForAI = useChatStore((state) => state.getHistoryForAI);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Check for expired history on mount
-  useEffect(() => {
-    checkExpiration();
-  }, [checkExpiration]);
 
   // Auto-scroll chat messages to bottom (scoped to container only)
   useEffect(() => {
