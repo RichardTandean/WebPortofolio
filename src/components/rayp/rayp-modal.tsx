@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, X, ArrowLeft } from "lucide-react";
+import { Bot, X } from "lucide-react";
 import { useChatStore } from "@/lib/chat-store";
 import { ChatInterface } from "./chat-interface";
 
@@ -21,7 +21,7 @@ export function RaypModal() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ delay: 0.6, duration: 0.4 }}
-            className="fixed bottom-24 right-6 z-[60] max-w-[260px]"
+            className="fixed bottom-24 right-4 left-4 z-[60] max-w-[260px] ml-auto"
           >
             <div className="bg-[#1a1a1a] border border-[#333333] rounded-2xl px-4 py-3 shadow-xl">
               <p className="text-sm text-[#f0f0eb] leading-relaxed">
@@ -43,32 +43,42 @@ export function RaypModal() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={openWidget}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#0055ff] hover:bg-[#3b82f6] rounded-full flex items-center justify-center shadow-lg transition-colors"
+          className="fixed bottom-6 right-4 z-50 w-14 h-14 bg-[#0055ff] hover:bg-[#3b82f6] rounded-full flex items-center justify-center shadow-lg transition-colors"
           aria-label="Open Rayp AI Assistant"
         >
           <Bot className="w-6 h-6 text-white" />
         </motion.button>
       )}
 
-      {/* Full-screen Modal */}
+      {/* Bottom Sheet Panel */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-[#0d0d0d] flex flex-col"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[#262626] safe-area-top">
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={toggleWidget}
-                  className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#555555] hover:text-[#f0f0eb] transition-colors -ml-2"
-                  aria-label="Back"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={toggleWidget}
+              className="fixed inset-0 z-[90] bg-black/60"
+            />
+
+            {/* Sheet */}
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="fixed bottom-0 left-0 right-0 z-[100] bg-[#0d0d0d] flex flex-col shadow-2xl"
+              style={{ maxHeight: "85vh", borderRadius: "20px 20px 0 0" }}
+            >
+              {/* Drag Handle */}
+              <div className="flex justify-center pt-3 pb-1">
+                <div className="w-10 h-1 rounded-full bg-[#333333]" />
+              </div>
+
+              {/* Header */}
+              <div className="flex items-center justify-between px-5 py-3 border-b border-[#262626]">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-full bg-[#0055ff]/20 flex items-center justify-center">
                     <Bot className="w-4 h-4 text-[#0055ff]" />
@@ -80,21 +90,21 @@ export function RaypModal() {
                     <p className="text-[10px] text-[#555555]">Richard&apos;s AI Assistant</p>
                   </div>
                 </div>
+                <button
+                  onClick={toggleWidget}
+                  className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#555555] hover:text-[#f0f0eb] transition-colors"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-              <button
-                onClick={toggleWidget}
-                className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#555555] hover:text-[#f0f0eb] transition-colors"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
 
-            {/* Chat */}
-            <div className="flex-1 overflow-hidden">
-              <ChatInterface />
-            </div>
-          </motion.div>
+              {/* Chat */}
+              <div className="flex-1 overflow-hidden min-h-0">
+                <ChatInterface />
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

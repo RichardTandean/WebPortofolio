@@ -105,7 +105,7 @@ export function ChatInterface() {
       </div>
 
       {/* Input Area */}
-      <div className="border-t border-[#262626] p-4 flex-shrink-0">
+      <div className="border-t border-[#262626] px-3 py-3 flex-shrink-0">
         <ChatInput
           onSend={handleSend}
           disabled={isTyping}
