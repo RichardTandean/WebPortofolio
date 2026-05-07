@@ -12,7 +12,7 @@ import { Testimonials } from "@/components/testimonials";
 
 export default function Home() {
   const featured = projects.slice(0, 2);
-  const rest = projects.slice(2, 6);
+  const rest = projects.slice(2);
 
   return (
     <main className="bg-[#0d0d0d] min-h-screen">

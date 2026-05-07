@@ -81,6 +81,40 @@ export const projects: Project[] = [
     ],
   },
   {
+    title: "UPT JPD Chatbot",
+    subtitle: "WhatsApp AI Chatbot for Education Services",
+    category: ["AI & Automation", "Backend"],
+    description: "An intelligent WhatsApp chatbot built for UPT Jaminan Pendidikan Daerah (Dinas Pendidikan Pemuda dan Olahraga Kota Yogyakarta) to automate public inquiries. Powered by Deepseek as the LLM, orchestrated through n8n workflows, and connected via WAHA (WhatsApp HTTP API). Features include admin handoff with a 10-minute chat request window, Redis-based anti-spam, and smart filtering to ignore group chats and broadcasts.",
+    images: [],
+    tech: ["n8n", "WAHA", "Deepseek", "Redis", "TypeScript", "WhatsApp API"],
+    features: [
+      "Deepseek LLM for intelligent public inquiry responses",
+      "Admin handoff with 10-minute live chat request window",
+      "Redis-based anti-spam to prevent message flooding",
+      "Ignores group messages and broadcast lists",
+    ],
+    role: "AI Automation Engineer",
+    responsibilities: [
+      "Architected end-to-end chatbot workflow using n8n for message routing and AI processing",
+      "Integrated Deepseek LLM for context-aware responses to public education inquiries",
+      "Implemented WAHA (WhatsApp HTTP API) for reliable WhatsApp connectivity",
+      "Built admin handoff feature allowing users to request live chat with staff within a 10-minute window",
+      "Designed Redis-based rate limiting to prevent spam and abuse",
+      "Configured smart message filtering to bypass group chats and broadcast messages",
+    ],
+    challenges: [
+      "Ensuring the admin handoff window reliably expires after 10 minutes without leaving sessions dangling",
+      "Tuning Redis rate limiting to block spam while allowing legitimate rapid-fire questions",
+      "Handling WAHA connection stability for 24/7 uptime",
+    ],
+    learnings: [
+      "Designing production-grade WhatsApp chatbots with n8n workflow orchestration",
+      "Implementing real-time admin handoff mechanisms within messaging platforms",
+      "Building anti-spam systems with Redis for high-throughput messaging environments",
+    ],
+    demo: "https://www.instagram.com/uptjpdjogja/",
+  },
+  {
     title: "EPICS In IEEE",
     subtitle: "An AIoT Based Smart Agricultural System for Pests Detection",
     category: ["Web Apps", "Backend", "IoT"],
@@ -173,7 +207,7 @@ export const projects: Project[] = [
       "Shipping a production landing page from idea to launch",
       "Optimizing for SEO and performance with Next.js static generation",
     ],
-    demo: "https://superfreakstudio.com",
+    demo: "https://staging.superfreakstudio.com",
   },
 ];
 
